@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,8 +12,10 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { NotFoundComponent } from './not-found/not-found.component';
 import { CartComponent } from './cart/cart.component';
 import { ToastrModule } from 'ngx-toastr';
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import { CartDetailComponent } from './cart-detail/cart-detail.component'
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { CartDetailComponent } from './cart-detail/cart-detail.component';
+import { VatPipe } from './pipes/vat.pipe';
+import { FilterPipe } from './pipes/filter.pipe'
 
 @NgModule({
   declarations: [
@@ -23,15 +26,18 @@ import { CartDetailComponent } from './cart-detail/cart-detail.component'
     ProductDetailComponent,
     NotFoundComponent,
     CartComponent,
-    CartDetailComponent
-   
+    CartDetailComponent,
+    VatPipe,
+    FilterPipe
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot({positionClass:"toast-bottom-right"})
+    FormsModule,
+    ToastrModule.forRoot({ positionClass: "toast-bottom-right" })
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,25 +1,83 @@
-<table class="table">
+<div *ngIf="loading==false; else loadingInfo">
+  <div>
+    <input type="text" [(ngModel)]="filterText" class="form-control" placeholder="arama ifadesi" />
+    <span *ngIf="filterText" class="badge bg-secondary">{{filterText}}</span>
+
+  </div>
+  <table class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
         <th scope="col">kategori</th>
         <th scope="col">ürün adı</th>
         <th scope="col">fiyatı</th>
+        <th scope="col">KDV si</th>
         <th scope="col">stok adedi</th>
         <th scope="col">açıklama </th>
         <th></th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let product of products">
+      <tr *ngFor="let product of products | filter:filterText">
         <th scope="row">{{product.id}}</th>
         <td>{{product.categoryId}}</td>
-        <td>{{product.name}}</td>
-        <td>{{product.unitPrice}}</td>
+        <td>{{product.name | uppercase}}</td>
+        <td>{{product.unitPrice | currency:"EUR" }}</td>
+        <td>{{product.unitPrice | vat:10 | currency:"EUR"}}</td>
         <td>{{product.unitsInStock}}</td>
         <td>{{product.quantityPerUnit}}</td>
         <td><button (click)="addToCart(product)" class="btn btn-sm btn-success">sepete ekle</button></td>
       </tr>
-     
+
     </tbody>
   </table>
+
+  <!-- <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" (click)="getProductsByPage(pagingInfo.currentPage-1)">Previous</a></li>
+      <li class={{getCurrentPageStyle(i)}} *ngFor="let i of pageArray"><a (click)="getProductsByPage(i+1)" class="page-link">{{i + 1}}</a></li>
+
+      <li class="page-item "><a class="page-link" (click)="getProductsByPage(pagingInfo.currentPage+1)">Next</a></li>
+    </ul>
+  </nav> -->
+
+  <nav aria-label="Page Navigation">
+    <ul class="pagination justify-content-center">
+      <li style="cursor: pointer;" class="page-item"><a class="page-link"
+          (click)="getProductsByPage(pagingInfo.currentPage-1)">Önceki</a></li>
+      <li style="cursor: pointer;" class={{getCurrentPageStyle(i)}} *ngFor="let i of pageArray"><a
+          (click)="getProductsByPage(i+1)" class="page-link">{{i+1}}</a></li>
+      <li style="cursor: pointer;" class="page-item"><a class="page-link"
+          (click)="getProductsByPage(pagingInfo.currentPage+1)">Sonraki</a></li>
+    </ul>
+  </nav>
+</div>
+
+{{pagingInfo.pageCount}}
+
+<ng-template #loadingInfo>
+  <div class="spinner-grow text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-secondary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-success" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-danger" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-warning" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-info" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-light" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+  <div class="spinner-grow text-dark" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</ng-template>

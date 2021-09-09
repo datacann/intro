@@ -15,21 +15,23 @@ export class CartService {
   }
 
   addToCart(product: Product) {
-
     let item = CartItems.find(c => c.product.id === product.id)//sepette var mı kontrol
     if (item) {
       item.quantity++;
     } else {
       let cartItem: CartItem = { product: product, quantity: 1 }
       CartItems.push(cartItem)
-
     }
-
-
-
   }
 
-
-
-
+  removeFromCart(product:Product){
+    let item = CartItems.find(c=>c.product.id===product.id)
+    if(item){
+      if(item.quantity>1){
+        item.quantity--
+      }else{
+        CartItems.splice(CartItems.indexOf(item),1)
+      }
+    }
+  }
 }

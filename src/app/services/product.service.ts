@@ -24,6 +24,9 @@ export class ProductService {
     return this.httpClient.get<Product>(this.apiUrl + "/" + id);
   }
 
+  getProductByPage(page:number){
+    return this.httpClient.get<Product[]>(this.apiUrl + "?_page=" + page);
+  }
 
 
 }
